@@ -2,19 +2,24 @@ In ms exchange IMAP successful or fail logins with IP source are not fixed in th
 How to stop IMAP brute force on MS exchange 2013+(may be work on 2010) servers:
 1) IMAP Logs on 
 "Set-ImapSettings -Server "SERVERNAME" -ProtocolLogEnabled $true"
+
 2) change logs size to 20mb
 "Set-PopSettings -Server "SERVERNAME" -LogPerFileSizeQuota 20000000"
+
 3) Restart IMAP
 "Stop-service msExchangeIMAP4"
 "Start-service msExchangeIMAP4"
+
 4)check settings and remember logs path (on 2013 it c:\Program Files\Microsoft\Exchange Server\V15\Logging\Imap4\)
 "Get-ImapSettings | format-list"
+
 5)change in wail2ban_config.ini 
 [Application]
 18456=MSSQL Logins
 to 
 [Application]
 1035
+
 6)
 run script that will check the logs and create events:
 
