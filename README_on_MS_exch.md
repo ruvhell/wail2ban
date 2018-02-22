@@ -18,7 +18,7 @@ How to stop IMAP brute force on MS exchange 2013+(may be work on 2010) servers:
 18456=MSSQL Logins
 to 
 [Application]
-1035
+1035=mail Logins
 
 6)
 run script that will check the logs and create events:
