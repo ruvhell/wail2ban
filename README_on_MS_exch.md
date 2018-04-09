@@ -23,14 +23,14 @@ to
 6)
 run script that will check the logs and create events:
 
-"$DebugPreference = "continue"
+$DebugPreference = "continue"
 $path = "c:\Program Files\Microsoft\Exchange Server\V15\Logging\Imap4\"
-
+$include = "IMAP420*"
 do{ 
 
-$file = Get-ChildItem -Path $path | Sort-Object LastWriteTime | Select-Object -Last 1
+$file = Get-ChildItem -Path $path | where-object name -like $include  | Sort-Object LastWriteTime |Select-Object -Last 1
 $string = Select-String "AuthFailed:" "c:\Program Files\Microsoft\Exchange Server\V15\Logging\Imap4\$file" | Select-Object -ExpandProperty line | select -last 1 
-if (!$string) {Start-Sleep -Milliseconds 2000}
+if (!$string) {Start-Sleep -Milliseconds 20000}
 if (!$string) {continue}
 $old = $string.Split(",")
 Start-Sleep -Milliseconds 200
@@ -46,4 +46,4 @@ if ($old[1] -ne $new[1]) { Write-EventLog –LogName Application –Source “wa
 
 else {Start-Sleep -Milliseconds 200}
 }
-while ($true)"
+while ($true)
